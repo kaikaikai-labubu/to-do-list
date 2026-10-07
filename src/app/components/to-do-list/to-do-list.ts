@@ -1,26 +1,35 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import type { ToDo } from '../../models/to-do';
+import { ToDoService } from '../../services/to-do.service';
+import { AddToDoItem } from '../add-to-do-item/add-to-do-item';
 import { ToDoItem } from '../to-do-item/to-do-item';
 
 @Component({
-  imports: [ToDoItem],
+  imports: [AddToDoItem, ToDoItem],
   selector: 'app-to-do-list',
   styleUrl: './to-do-list.css',
   templateUrl: './to-do-list.html',
 })
 export class ToDoList implements OnInit {
-  private readonly http = inject(HttpClient);
+  private readonly toDoService = inject(ToDoService);
 
   readonly toDo = signal<ToDo[]>([]);
 
   ngOnInit(): void {
-    this.http
-      .get<ToDo[]>('https://localhost:7044/ToDoList')
-      .subscribe((items) => {
-        this.toDo.set(
-          items
-        );
-      });
+    this.toDoService.getToDos().subscribe((items) => {
+      this.toDo.set(items);
+    });
+  }
+
+  protected addToDo(title: string): void {
+    this.toDoService.addToDo(title).subscribe((newItem) => {
+      this.toDo.update((items) => [...items, newItem]);
+    });
+  }
+
+  protected deleteToDo(id: string): void {
+    this.toDoService.deleteToDo(id).subscribe(() => {
+      this.toDo.update((items) => items.filter((item) => item.id !== id));
+    });
   }
 }

@@ -1,7 +1,9 @@
 <div>  
+  <app-add-to-do-item (addItem)="addToDo($event)"></app-add-to-do-item>
   @for (toDo of toDo(); track toDo.id) {
       <app-to-do-item
         [toDo]="toDo"
+        (deleteToDo)="deleteToDo(toDo.id)"
       />
     }
 </div>

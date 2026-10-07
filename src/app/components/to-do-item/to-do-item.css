@@ -1,0 +1,10 @@
+.title-row {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.title-row h2 {
+	margin: 0;
+}

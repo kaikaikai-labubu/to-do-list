@@ -1,4 +1,7 @@
 <article>
-  <h2>{{ toDo().title }}</h2>
+  <div class="title-row">
+    <h2>{{ toDo().title }}</h2>
+    <button type="button" (click)="deleteToDo.emit(toDo().id)">Delete</button>
+  </div>
   <p>Date Created: {{ toDo().dateCreated }}</p>
 </article>

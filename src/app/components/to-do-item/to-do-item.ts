@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import type { ToDo } from '../../models/to-do';
 
 @Component({
@@ -9,4 +9,5 @@ import type { ToDo } from '../../models/to-do';
 })
 export class ToDoItem {
   readonly toDo = input.required<ToDo>();
+  readonly deleteToDo = output<string>();
 }
